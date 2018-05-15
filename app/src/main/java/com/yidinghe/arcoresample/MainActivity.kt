@@ -2,7 +2,6 @@ package com.yidinghe.arcoresample
 
 import android.graphics.Point
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -18,6 +17,12 @@ private var fragment: ArFragment? = null
 private val pointer = PointerDrawable()
 private var isTracking = false
 private var isHitting = false
+
+/*
+FYI, we can put the sceneform models to two locations:
+1. src/main/assets/andy.sfb
+2. src/main/res/raw/andy.sfb
+ */
 
 class MainActivity : AppCompatActivity() {
 
