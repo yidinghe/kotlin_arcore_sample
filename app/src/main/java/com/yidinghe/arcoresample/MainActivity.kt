@@ -1,15 +1,24 @@
 package com.yidinghe.arcoresample
 
 import android.app.AlertDialog
+import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Point
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.os.Handler
+import android.os.HandlerThread
+import android.support.design.widget.Snackbar
+import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.PixelCopy
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.google.ar.core.Anchor
 import com.google.ar.core.Plane
 import com.google.ar.core.TrackingState
@@ -18,8 +27,10 @@ import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.rendering.Renderable
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
-
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
+import java.io.IOException
+
 
 private var fragment: ArFragment? = null
 
@@ -48,7 +59,42 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        fab.setOnClickListener {
+            takePhoto()
+        }
+
         initializeGallery()
+    }
+
+    private fun takePhoto() {
+        val filename = Util().generateFilename()
+        val view = fragment!!.arSceneView
+        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val handlerThread = HandlerThread("PixelCopier")
+        handlerThread.start()
+        PixelCopy.request(view, bitmap, { copyResult ->
+            if (copyResult == PixelCopy.SUCCESS) {
+                try {
+                    Util().saveBitmapToDisk(bitmap, filename)
+                } catch (e: IOException) {
+                    Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+                    return@request
+                }
+                val snackbar = Snackbar.make(findViewById(android.R.id.content), "Photo saved", Snackbar.LENGTH_LONG)
+                snackbar.setAction("Open in Photos") {
+                    val photoFile = File(filename)
+                    val photoURI = FileProvider.getUriForFile(this, this.packageName + ".ar.codelab.name.provider", photoFile)
+                    val intent = Intent(Intent.ACTION_VIEW, photoURI)
+                    intent.setDataAndType(photoURI, "image/*")
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    startActivity(intent)
+                }
+                snackbar.show()
+            } else {
+                Toast.makeText(this, "Failed to copyPixels: $copyResult", Toast.LENGTH_LONG).show()
+            }
+            handlerThread.quitSafely()
+        }, Handler(handlerThread.looper))
     }
 
     private fun placeObject(fragment: ArFragment, anchor: Anchor, model: Uri) {
