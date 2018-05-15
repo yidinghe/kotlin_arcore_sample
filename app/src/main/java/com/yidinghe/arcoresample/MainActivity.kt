@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         cabin.setImageResource(R.drawable.cabin_thumb)
         cabin.contentDescription = "cabin"
         cabin.setOnClickListener {
-            addObject(Uri.parse("cabin.sfb"));
+            addObject(Uri.parse("Cabin.sfb"));
         }
         gallery.addView(cabin)
 
@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
         house.setImageResource(R.drawable.house_thumb)
         house.contentDescription = "house"
         house.setOnClickListener {
-            addObject(Uri.parse("house.sfb"));
+            addObject(Uri.parse("House.sfb"));
         }
         gallery.addView(house)
 

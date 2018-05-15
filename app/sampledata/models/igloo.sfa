@@ -35,7 +35,7 @@
       ],
       file: "sampledata/models/igloo.obj",
       name: "igloo",
-      scale: 0.25,
+      scale: 0.10,
       suggested_collision: {
          center: {
             x: 0,
