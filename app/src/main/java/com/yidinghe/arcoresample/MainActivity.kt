@@ -1,14 +1,23 @@
 package com.yidinghe.arcoresample
 
+import android.app.AlertDialog
 import android.graphics.Point
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
+import com.google.ar.core.Anchor
 import com.google.ar.core.Plane
 import com.google.ar.core.TrackingState
+import com.google.ar.sceneform.AnchorNode
+import com.google.ar.sceneform.rendering.ModelRenderable
+import com.google.ar.sceneform.rendering.Renderable
 import com.google.ar.sceneform.ux.ArFragment
+import com.google.ar.sceneform.ux.TransformableNode
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -36,6 +45,81 @@ class MainActivity : AppCompatActivity() {
             it.arSceneView.scene.setOnUpdateListener { frameTime ->
                 it.onUpdate(frameTime)
                 this.onUpdate()
+            }
+        }
+
+        initializeGallery()
+    }
+
+    private fun placeObject(fragment: ArFragment, anchor: Anchor, model: Uri) {
+        ModelRenderable.builder()
+                .setSource(fragment.context, model)
+                .build()
+                .thenAccept({
+                    addNodeToScene(fragment, anchor, it)
+                })
+                .exceptionally {
+                    val alertBuilder = AlertDialog.Builder(this)
+                    alertBuilder.setMessage(it.message).setTitle("error!")
+                    alertBuilder.create().show()
+                    return@exceptionally null
+                }
+    }
+
+    private fun addNodeToScene(fragment: ArFragment, anchor: Anchor, renderable: Renderable) {
+        val anchorNode = AnchorNode(anchor)
+        val node = TransformableNode(fragment.transformationSystem)
+        node.renderable = renderable
+        node.setParent(anchorNode)
+        fragment.arSceneView.scene.addChild(anchorNode)
+        node.select()
+    }
+
+    private fun initializeGallery() {
+        val gallery = findViewById<LinearLayout>(R.id.gallery_layout)
+
+        val andy = ImageView(this);
+        andy.setImageResource(R.drawable.droid_thumb)
+        andy.contentDescription = "andy"
+        andy.setOnClickListener {
+            addObject(Uri.parse("andy.sfb"));
+        }
+        gallery.addView(andy)
+
+        val cabin = ImageView(this);
+        cabin.setImageResource(R.drawable.cabin_thumb)
+        cabin.contentDescription = "cabin"
+        cabin.setOnClickListener {
+            addObject(Uri.parse("cabin.sfb"));
+        }
+        gallery.addView(cabin)
+
+        val house = ImageView(this);
+        house.setImageResource(R.drawable.house_thumb)
+        house.contentDescription = "house"
+        house.setOnClickListener {
+            addObject(Uri.parse("house.sfb"));
+        }
+        gallery.addView(house)
+
+        val igloo = ImageView(this);
+        igloo.setImageResource(R.drawable.igloo_thumb)
+        igloo.contentDescription = "igloo"
+        igloo.setOnClickListener {
+            addObject(Uri.parse("igloo.sfb"));
+        }
+        gallery.addView(igloo)
+    }
+
+    private fun addObject(model: Uri) {
+        val frame = fragment!!.arSceneView.arFrame
+        val pt = getScreenCenter()
+        val hits = frame.hitTest(pt.x.toFloat(), pt.y.toFloat())
+        for (hit in hits) {
+            val track = hit.trackable
+            if (track is Plane && track.isPoseInPolygon(hit.hitPose)) {
+                placeObject(fragment!!, hit.createAnchor(), model)
+                break
             }
         }
     }
@@ -67,12 +151,15 @@ class MainActivity : AppCompatActivity() {
         val wasHitting = isHitting
         isHitting = false
         val hits = frame.hitTest(pt.x.toFloat(), pt.y.toFloat())
-        hits.forEach {
-            val trackable = it.trackable
-            if (trackable is Plane && trackable.isPoseInPolygon(it.hitPose)) {
+
+        for (hit in hits) {
+            val track = hit.trackable
+            if (track is Plane && track.isPoseInPolygon(hit.hitPose)) {
                 isHitting = true
+                break
             }
         }
+
         return wasHitting != isHitting
     }
 
