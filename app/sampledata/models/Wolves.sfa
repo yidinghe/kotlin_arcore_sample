@@ -35,7 +35,7 @@
       ],
       file: "sampledata/models/Wolves.obj",
       name: "Wolves",
-      scale: 0.38524000000000003,
+      scale: 0.038524000000000003,
       suggested_collision: {
          center: {
             x: 0,

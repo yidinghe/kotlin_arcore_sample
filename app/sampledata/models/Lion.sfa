@@ -35,7 +35,7 @@
       ],
       file: "sampledata/models/Lion.obj",
       name: "Lion",
-      scale: 0.29385699999999998,
+      scale: 0.029385699999999998,
       suggested_collision: {
          center: {
             x: 0,

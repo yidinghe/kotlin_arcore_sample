@@ -18,16 +18,19 @@ import android.view.PixelCopy
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import com.google.ar.core.Anchor
 import com.google.ar.core.Plane
 import com.google.ar.core.TrackingState
 import com.google.ar.sceneform.AnchorNode
+import com.google.ar.sceneform.Node
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.rendering.Renderable
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 import java.io.File
 import java.io.IOException
 
@@ -122,39 +125,38 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeGallery() {
-        val gallery = findViewById<LinearLayout>(R.id.gallery_layout)
 
-        val andy = ImageView(this);
-        andy.setImageResource(R.drawable.droid_thumb)
-        andy.contentDescription = "andy"
-        andy.setOnClickListener {
-            addObject(Uri.parse("andy.sfb"));
+        btn_dog.setOnClickListener {
+            addObject(Uri.parse("Dog.sfb"))
         }
-        gallery.addView(andy)
 
-        val cabin = ImageView(this);
-        cabin.setImageResource(R.drawable.cabin_thumb)
-        cabin.contentDescription = "cabin"
-        cabin.setOnClickListener {
-            addObject(Uri.parse("Cabin.sfb"));
+        btn_cat.setOnClickListener {
+            addObject(Uri.parse("Mesh_Cat.sfb"))
         }
-        gallery.addView(cabin)
 
-        val house = ImageView(this);
-        house.setImageResource(R.drawable.house_thumb)
-        house.contentDescription = "house"
-        house.setOnClickListener {
-            addObject(Uri.parse("House.sfb"));
+        btn_elephant.setOnClickListener {
+            addObject(Uri.parse("Elephant_01.sfb"))
         }
-        gallery.addView(house)
 
-        val igloo = ImageView(this);
-        igloo.setImageResource(R.drawable.igloo_thumb)
-        igloo.contentDescription = "igloo"
-        igloo.setOnClickListener {
-            addObject(Uri.parse("igloo.sfb"));
+        btn_mouse.setOnClickListener {
+            addObject(Uri.parse("Mouse.sfb"))
         }
-        gallery.addView(igloo)
+
+        btn_tiger.setOnClickListener {
+            addObject(Uri.parse("Mesh_BengalTiger.sfb"))
+        }
+
+        btn_lion.setOnClickListener {
+            addObject(Uri.parse("Lion.sfb"))
+        }
+
+        btn_leopard.setOnClickListener {
+            addObject(Uri.parse("Mesh_Leopard.sfb"))
+        }
+
+        btn_wolve.setOnClickListener {
+            addObject(Uri.parse("Wolves.sfb"))
+        }
     }
 
     private fun addObject(model: Uri) {

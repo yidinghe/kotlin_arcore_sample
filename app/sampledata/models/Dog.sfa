@@ -139,7 +139,7 @@
       ],
       file: "sampledata/models/Dog.obj",
       name: "Dog",
-      scale: 0.003529,
+      scale: 0.0005529,
       suggested_collision: {
          center: {
             x: 0,

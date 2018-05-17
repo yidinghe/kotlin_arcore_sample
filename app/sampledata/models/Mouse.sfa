@@ -35,7 +35,7 @@
       ],
       file: "sampledata/models/Mouse.obj",
       name: "Mouse",
-      scale: 0.167097,
+      scale: 0.0167097,
       suggested_collision: {
          center: {
             x: 0,

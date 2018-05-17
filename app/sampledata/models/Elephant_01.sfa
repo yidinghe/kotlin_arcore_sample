@@ -113,7 +113,7 @@
       ],
       file: "sampledata/models/Elephant_01.obj",
       name: "Elephant_01",
-      scale: 0.0055149999999999999,
+      scale: 0.00055149999999999999,
       suggested_collision: {
          center: {
             x: 0,
