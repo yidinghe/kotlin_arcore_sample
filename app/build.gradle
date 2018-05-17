@@ -28,7 +28,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:design:27.1.1'
@@ -60,3 +60,43 @@ sceneform.asset('sampledata/models/igloo.obj',
         'default',
         'sampledata/models/igloo.sfa',
         'src/main/assets/igloo')
+
+sceneform.asset('sampledata/models/Dog.obj',
+        'default',
+        'sampledata/models/Dog.sfa',
+        'src/main/assets/Dog')
+
+sceneform.asset('sampledata/models/Elephant_01.obj',
+        'default',
+        'sampledata/models/Elephant_01.sfa',
+        'src/main/assets/Elephant_01')
+
+sceneform.asset('sampledata/models/Lion.obj',
+        'default',
+        'sampledata/models/Lion.sfa',
+        'src/main/assets/Lion')
+
+sceneform.asset('sampledata/models/Mesh_BengalTiger.obj',
+        'default',
+        'sampledata/models/Mesh_BengalTiger.sfa',
+        'src/main/assets/Mesh_BengalTiger')
+
+sceneform.asset('sampledata/models/Mesh_Cat.obj',
+        'default',
+        'sampledata/models/Mesh_Cat.sfa',
+        'src/main/assets/Mesh_Cat')
+
+sceneform.asset('sampledata/models/Mesh_Leopard.obj',
+        'default',
+        'sampledata/models/Mesh_Leopard.sfa',
+        'src/main/assets/Mesh_Leopard')
+
+sceneform.asset('sampledata/models/Mouse.obj',
+        'default',
+        'sampledata/models/Mouse.sfa',
+        'src/main/assets/Mouse')
+
+sceneform.asset('sampledata/models/Wolves.obj',
+        'default',
+        'sampledata/models/Wolves.sfa',
+        'src/main/assets/Wolves')
